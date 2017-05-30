@@ -1,0 +1,34 @@
+{
+  "name": "kap-plugin-test",
+  "version": "0.0.0",
+  "description": "Test your Kap plugins",
+  "license": "MIT",
+  "repository": "SamVerschueren/kap-plugin-test",
+  "author": {
+    "name": "Sam Verschueren",
+    "email": "sam.verschueren@gmail.com",
+    "url": "github.com/SamVerschueren"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "kap",
+    "plugin",
+    "testing",
+    "test"
+  ],
+  "dependencies": {
+    "kap-plugin-mock-context": "^0.1.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  }
+}
