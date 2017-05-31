@@ -7,12 +7,13 @@ const sinon = require('sinon');
 // Available export formats
 const formats = ['gif', 'mp4', 'webm', 'apng'];
 
-module.exports = options => {
-	options = Object.assign({
+module.exports = (file, opts) => {
+	opts = Object.assign({
+		config: {},
 		cwd: process.cwd()
-	}, options);
+	}, opts);
 
-	const plugin = importFrom(options.cwd, '.');
+	const plugin = importFrom(opts.cwd, '.');
 
 	const services = plugin.shareServices;
 
@@ -22,44 +23,38 @@ module.exports = options => {
 
 	const service = services[0];
 
-	return (file, opts) => {
-		opts = Object.assign({
-			config: {}
-		}, opts);
+	const type = path.extname(file).slice(1);
 
-		const type = path.extname(file).slice(1);
+	if (!formats.includes(type)) {
+		throw new Error(`Invalid file type, should be one of ${formats.join(', ')}`);
+	}
 
-		if (!formats.includes(type)) {
-			throw new Error(`Invalid file type, should be one of ${formats.join(', ')}`);
+	const config = Object.create(null);
+
+	for (const key of Object.keys(service.config || {})) {
+		if (Object.prototype.hasOwnProperty.call(opts.config, key)) {
+			config[key] = opts.config[key];
+		} else {
+			config[key] = service.config[key].default;
 		}
+	}
 
-		const config = Object.create(null);
+	const ctx = context({
+		file,
+		format: type.ext,
+		config
+	});
 
-		for (const key of Object.keys(service.config || {})) {
-			if (Object.prototype.hasOwnProperty.call(opts.config, key)) {
-				config[key] = opts.config[key];
-			} else {
-				config[key] = service.config[key].default;
-			}
-		}
+	sinon.spy(ctx, 'filePath');
+	sinon.stub(ctx, 'request');
+	sinon.spy(ctx, 'notify');
+	sinon.spy(ctx, 'copyToClipboard');
+	sinon.spy(ctx, 'setProgress');
+	sinon.spy(ctx, 'openConfigFile');
+	sinon.spy(ctx, 'cancel');
 
-		const ctx = context({
-			file,
-			format: type.ext,
-			config
-		});
-
-		sinon.spy(ctx, 'filePath');
-		sinon.stub(ctx, 'request');
-		sinon.spy(ctx, 'notify');
-		sinon.spy(ctx, 'copyToClipboard');
-		sinon.spy(ctx, 'setProgress');
-		sinon.spy(ctx, 'openConfigFile');
-		sinon.spy(ctx, 'cancel');
-
-		return {
-			context: ctx,
-			run: () => service.action(ctx)
-		};
+	return {
+		context: ctx,
+		run: () => service.action(ctx)
 	};
 };

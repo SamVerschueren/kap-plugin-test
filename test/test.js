@@ -2,19 +2,16 @@ import test from 'ava';
 import m from '..';
 
 test('no services', t => {
-	t.throws(() => m({cwd: 'test/fixtures/empty'}), 'No services found');
+	t.throws(() => m('test.gif', {cwd: 'test/fixtures/empty'}), 'No services found');
 });
 
 test('invalid file type', t => {
-	const service = m({cwd: 'test/fixtures/unicorn'});
-
-	t.throws(() => service('test.js'), 'Invalid file type, should be one of gif, mp4, webm, apng');
+	t.throws(() => m('test.js', {cwd: 'test/fixtures/unicorn'}), 'Invalid file type, should be one of gif, mp4, webm, apng');
 });
 
 test('context object', t => {
-	const service = m({cwd: 'test/fixtures/unicorn'});
-
-	const {context} = service('test.gif', {
+	const {context} = m('test.gif', {
+		cwd: 'test/fixtures/unicorn',
 		config: {
 			foo: 'bar',
 			unicorn: '🌈'
@@ -27,9 +24,8 @@ test('context object', t => {
 });
 
 test('execute plugin', async t => {
-	const service = m({cwd: 'test/fixtures/unicorn'});
-
-	const plugin = service('test.gif', {
+	const plugin = m('test.gif', {
+		cwd: 'test/fixtures/unicorn',
 		config: {
 			unicorn: '🌈'
 		}
@@ -39,9 +35,9 @@ test('execute plugin', async t => {
 });
 
 test('stub request', async t => {
-	const service = m({cwd: 'test/fixtures/request'});
-
-	const plugin = service('test.gif');
+	const plugin = m('test.gif', {
+		cwd: 'test/fixtures/request'
+	});
 
 	plugin.context.request.resolves({
 		url: 'http://myapi.com/123.gif'
