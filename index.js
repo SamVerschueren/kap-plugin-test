@@ -52,7 +52,7 @@ module.exports = plugin => {
 
 		return {
 			context: ctx,
-			exec: () => service.action(ctx)
+			run: () => service.action(ctx)
 		};
 	};
 };

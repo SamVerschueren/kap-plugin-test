@@ -38,7 +38,7 @@ test('execute plugin', async t => {
 		}
 	});
 
-	t.is(await plugin.exec(), '🌈');
+	t.is(await plugin.run(), '🌈');
 });
 
 test('stub request', async t => {
@@ -50,7 +50,7 @@ test('stub request', async t => {
 		url: 'http://myapi.com/123.gif'
 	});
 
-	await plugin.exec();
+	await plugin.run();
 
 	t.true(plugin.context.copyToClipboard.calledWith('http://myapi.com/123.gif'));
 });

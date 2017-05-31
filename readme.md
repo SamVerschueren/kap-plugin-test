@@ -29,7 +29,7 @@ test(async t => {
 
 	plugin.context.request.resolves({url: 'http://gph.is/1TGDci8'})
 
-	await plugin.exec();
+	await plugin.run();
 
 	t.true(plugin.context.copyToClipboard.calledWith('http://gph.is/1TGDci8'));
 });
@@ -67,9 +67,9 @@ Plugin configuration object.
 
 ### plugin
 
-#### .exec()
+#### .run()
 
-Execute the plugin.
+Run the plugin.
 
 #### .context
 
