@@ -25,6 +25,7 @@
     "test"
   ],
   "dependencies": {
+    "import-from": "^2.1.0",
     "kap-plugin-mock-context": "^0.1.1",
     "sinon": "^2.3.2"
   },

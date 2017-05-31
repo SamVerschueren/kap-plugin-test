@@ -16,10 +16,9 @@ $ npm install --save-dev kap-plugin-test
 import test from 'ava';
 import sinon from 'sinon';
 import kapPluginTest from 'kap-plugin-test';
-import myPlugin from '.';
 
 test(async t => {
-	const service = kapPluginTest(myPlugin);
+	const service = kapPluginTest();
 
 	const plugin = service('path/to/input.gif', {
 		config: {
@@ -38,15 +37,20 @@ test(async t => {
 
 ## API
 
-### kapPluginTest(module)
+### kapPluginTest(options)
 
 Returns a [`service`](#servicefile-options) function.
 
-#### module
+#### options
 
-Type: `module`
+Type: `object`
 
-The plugin module.
+##### cwd
+
+Type: `string`<br>
+Default: `process.cwd()`
+
+Location of the plugin.
 
 ### service(file, [options])
 

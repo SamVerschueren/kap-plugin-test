@@ -1,12 +1,19 @@
 'use strict';
 const path = require('path');
 const context = require('kap-plugin-mock-context');
+const importFrom = require('import-from');
 const sinon = require('sinon');
 
 // Available export formats
 const formats = ['gif', 'mp4', 'webm', 'apng'];
 
-module.exports = plugin => {
+module.exports = options => {
+	options = Object.assign({
+		cwd: process.cwd()
+	}, options);
+
+	const plugin = importFrom(options.cwd, '.');
+
 	const services = plugin.shareServices;
 
 	if (services.length === 0) {
