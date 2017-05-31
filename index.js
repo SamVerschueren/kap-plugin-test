@@ -1,6 +1,7 @@
 'use strict';
 const path = require('path');
 const context = require('kap-plugin-mock-context');
+const sinon = require('sinon');
 
 // Available export formats
 const formats = ['gif', 'mp4', 'webm', 'apng'];
@@ -15,7 +16,9 @@ module.exports = plugin => {
 	const service = services[0];
 
 	return (file, opts) => {
-		opts = Object.assign({}, opts);
+		opts = Object.assign({
+			config: {}
+		}, opts);
 
 		const type = path.extname(file).slice(1);
 
@@ -38,6 +41,14 @@ module.exports = plugin => {
 			format: type.ext,
 			config
 		});
+
+		sinon.spy(ctx, 'filePath');
+		sinon.stub(ctx, 'request');
+		sinon.spy(ctx, 'notify');
+		sinon.spy(ctx, 'copyToClipboard');
+		sinon.spy(ctx, 'setProgress');
+		sinon.spy(ctx, 'openConfigFile');
+		sinon.spy(ctx, 'cancel');
 
 		return {
 			context: ctx,

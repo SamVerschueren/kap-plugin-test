@@ -10,7 +10,7 @@
     "url": "github.com/SamVerschueren"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=8"
   },
   "scripts": {
     "test": "xo && ava"
@@ -25,7 +25,8 @@
     "test"
   ],
   "dependencies": {
-    "kap-plugin-mock-context": "^0.1.0"
+    "kap-plugin-mock-context": "^0.1.1",
+    "sinon": "^2.3.2"
   },
   "devDependencies": {
     "ava": "*",

@@ -27,7 +27,7 @@ test(async t => {
 		}
 	});
 
-	sinon.spy(plugin.context, 'copyToClipboard');
+	plugin.context.request.resolves({url: 'http://gph.is/1TGDci8'})
 
 	await plugin.exec();
 
@@ -73,7 +73,7 @@ Execute the plugin.
 
 #### .context
 
-Access the plugin context object.
+Access the plugin context object. All methods are SinonJS [spies](http://sinonjs.org/releases/v2.3.2/spies/), except for `request` which is a [stub](http://sinonjs.org/releases/v2.3.2/stubs/).
 
 
 ## Related

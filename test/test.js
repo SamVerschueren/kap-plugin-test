@@ -1,6 +1,7 @@
 import test from 'ava';
 import empty from './fixtures/empty';
 import unicorn from './fixtures/unicorn';
+import request from './fixtures/request';
 import m from '..';
 
 test('no services', t => {
@@ -38,4 +39,18 @@ test('execute plugin', async t => {
 	});
 
 	t.is(await plugin.exec(), '🌈');
+});
+
+test('stub request', async t => {
+	const service = m(request);
+
+	const plugin = service('test.gif');
+
+	plugin.context.request.resolves({
+		url: 'http://myapi.com/123.gif'
+	});
+
+	await plugin.exec();
+
+	t.true(plugin.context.copyToClipboard.calledWith('http://myapi.com/123.gif'));
 });
