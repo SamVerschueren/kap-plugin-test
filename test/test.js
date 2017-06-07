@@ -9,6 +9,10 @@ test('invalid file type', t => {
 	t.throws(() => m('test.js', {cwd: 'test/fixtures/unicorn'}), 'Invalid file type, should be one of gif, mp4, webm, apng');
 });
 
+test('invalid service', t => {
+	t.throws(() => m('test.gif', {service: '1', cwd: 'test/fixtures/multi'}, 'Expected `service` to be of type `number`, got `string`'));
+});
+
 test('context object', t => {
 	const {context} = m('test.gif', {
 		cwd: 'test/fixtures/unicorn',
@@ -29,6 +33,15 @@ test('execute plugin', async t => {
 		config: {
 			unicorn: '🌈'
 		}
+	});
+
+	t.is(await plugin.run(), '🌈');
+});
+
+test('execute plugin with different service', async t => {
+	const plugin = m('test.gif', {
+		service: 1,
+		cwd: 'test/fixtures/multi'
 	});
 
 	t.is(await plugin.run(), '🌈');

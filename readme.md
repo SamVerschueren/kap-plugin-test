@@ -48,6 +48,13 @@ Path to the file that is being processed.
 
 Type: `object`
 
+#### service
+
+Type: `number`<br>
+Default: `0`
+
+Index of the service in the `shareServices` array that you want to test.
+
 #### cwd
 
 Type: `string`<br>
