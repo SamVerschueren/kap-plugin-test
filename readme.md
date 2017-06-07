@@ -55,19 +55,19 @@ Default: `0`
 
 Index of the service in the `shareServices` array that you want to test.
 
-#### cwd
-
-Type: `string`<br>
-Default: `process.cwd()`
-
-Location of the plugin.
-
 #### config
 
 Type: `object`<br>
 Default: `plugin defaults`
 
 Plugin configuration object.
+
+#### cwd
+
+Type: `string`<br>
+Default: `process.cwd()`
+
+Location of the plugin.
 
 ### plugin
 
