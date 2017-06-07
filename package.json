@@ -9,9 +9,6 @@
     "email": "sam.verschueren@gmail.com",
     "url": "github.com/SamVerschueren"
   },
-  "engines": {
-    "node": ">=8"
-  },
   "scripts": {
     "test": "xo && ava"
   },
